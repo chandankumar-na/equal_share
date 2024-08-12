@@ -33,3 +33,11 @@ def read_group( db: Session = Depends(get_db)):
     if db_groups is None:
         raise HTTPException(status_code=404, detail="Groups not found")
     return db_groups
+
+@router.delete("/groups/{group_id}", response_model=schemas.Group)
+def delete_group(group_id: int, db: Session = Depends(get_db)):
+    try:
+        deleted_group = crud.delete_group(db, group_id)
+        return deleted_group
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
