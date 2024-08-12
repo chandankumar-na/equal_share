@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import NoResultFound
 from . import models, schemas
+
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -26,6 +28,16 @@ def create_group(db: Session, group: schemas.GroupCreate):
     db.commit()
     db.refresh(db_group)
     return db_group
+    
+def delete_group(db: Session, group_id: int):
+    try:
+        db_group = db.query(models.Group).filter(models.Group.id == group_id).one()
+        db.delete(db_group)
+        db.commit()
+        return db_group
+    except NoResultFound:
+        db.rollback()
+        raise ValueError("Group not found.")
 
 def create_expense(db: Session, expense: schemas.ExpenseCreate):
     db_expense = models.Expense(
