@@ -26,3 +26,10 @@ def read_group(group_id: int, db: Session = Depends(get_db)):
     if db_group is None:
         raise HTTPException(status_code=404, detail="Group not found")
     return db_group
+    
+@router.get("/", response_model= list[schemas.Group])
+def read_group( db: Session = Depends(get_db)):
+    db_groups = crud.get_groups(db)
+    if db_groups is None:
+        raise HTTPException(status_code=404, detail="Groups not found")
+    return db_groups
