@@ -1,6 +1,6 @@
 # equal share App
 
-This is a simple EqualShare app built using Python and FastAPI.
+This is a simple EqualShare app built using Python FastAPI.
 
 ## Getting Started
 
