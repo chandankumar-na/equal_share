@@ -15,4 +15,4 @@ app.include_router(expenses.router)
 if __name__=="__main__":
     import uvicorn
     uvicorn.run(app)
-    print("Server Started..")
+    print("Server Started...")
